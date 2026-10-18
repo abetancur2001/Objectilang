@@ -5,7 +5,7 @@ import util::Reflective;
 import util::LanguageServer;
 import Syntax;
 
-PathConfig pcfg = getProjectPathConfig(|project://proyecto2-objectilang|);
+PathConfig pcfg = getProjectPathConfig(|project://objectilang|);
 Language objLang = language(pcfg, "Objectilang", {"objl"}, "Plugin", "contribs");
 
 set[LanguageService] contribs() = {

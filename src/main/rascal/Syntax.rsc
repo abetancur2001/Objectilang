@@ -25,6 +25,7 @@ keyword ReservedWord
   | "if" | "then" | "else" | "for" | "main"
   | "true" | "false" | "print" | "println"
   | "and" | "or" | "neg" | "in"
+  | "Integer" | "Boolean" | "String"
   ;
 
 syntax Thing = thing: Variance variance ConsOp? consOp;
