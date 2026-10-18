@@ -57,16 +57,21 @@ syntax Main = main: "method" "main" "{" Instructions instructions "}";
 syntax Instructions = instructions: Instruction*;
 
 syntax Instruction
-  = declaration: Declaration
-  | assignment: Assignment
-  | methodCall: MethodCall
-  | print: Print
-  | ifExpr: IfExpression
-  | forLoop: For
-  | newInstr: NewExpression
+  = declarationInstruction: Declaration
+  | assignmentInstruction: Assignment
+  | methodCallInstruction: MethodCall
+  | printInstruction: Print
+  | ifInstruction: IfExpression
+  | forInstruction: For
+  | newInstruction: NewExpression
   ;
 
-syntax Declaration = declaration: ("val" | "var") kind Word name (":" Type)? "=" Expression val;
+syntax Declaration = declaration: DeclKind kind Word name (":" Type)? "=" Expression val;
+
+syntax DeclKind
+  = valDecl: "val"
+  | varDecl: "var"
+  ;
 
 syntax Type
   = basic: BasicType
@@ -82,12 +87,12 @@ syntax BasicType
 syntax TypeArguments = typeArgs: "[" Type ("," Type)* "]";
 
 syntax Expression
-  = literal: Literal
-  | variable: Word name
-  | newExpr: NewExpression
-  | methodCall: MethodCall
-  | ifExpr: IfExpression
-  | binary: BinaryExpression
+  = literalExpr: Literal
+  | variableExpr: Word name
+  | newExpression: NewExpression
+  | methodCallExpr: MethodCall
+  | conditionalExpr: IfExpression
+  | binaryExpr: BinaryExpression
   | paren: "(" Expression expr ")"
   | fieldAccess: Expression obj "." Word field
   ;
@@ -135,6 +140,11 @@ syntax BinaryExpression = binary: Expression lhs Operator op Expression rhs;
 
 syntax Assignment = assignment: Word name "=" Expression val;
 
-syntax Print = print: ("print" | "println") kind "(" Expression expr ")";
+syntax Print = print: PrintKind kind "(" Expression expr ")";
+
+syntax PrintKind
+  = printKind: "print"
+  | printlnKind: "println"
+  ;
 
 syntax For = forLoop: "for" "(" "(" Word key "," Word val ")" "\<-" Expression coll ")" Instruction body;
