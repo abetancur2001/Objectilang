@@ -25,7 +25,7 @@ keyword ReservedWord
   | "if" | "then" | "else" | "for" | "main"
   | "true" | "false" | "print" | "println"
   | "and" | "or" | "neg" | "in"
-  | "Integer" | "Boolean" | "String"
+  | "Integer" | "Boolean" | "String" | "Char" 
   ;
 
 syntax Thing = thing: Variance variance ConsOp? consOp;
@@ -42,7 +42,7 @@ syntax Mod
   | contravariant: "-"
   ;
 
-syntax ConsOp = consOp: "(" "val" Word ":" Word ("," "val" Word ":" Word)* ")";
+syntax ConsOp = consOp: "(" "val" Word ":" Type ("," "val" Word ":" Type)* ")";
 
 syntax Metho = metho: Word obj "." Word name "=" "method" "(" Parameters? params ")" ":" Type retType ("{" Instructions "}")?;
 
@@ -76,6 +76,7 @@ syntax BasicType
   = integer: "Integer"
   | boolean: "Boolean"
   | string: "String"
+  | char: "Char"
   ;
 
 syntax TypeArguments = typeArgs: "[" Type ("," Type)* "]";
@@ -116,9 +117,11 @@ syntax Literal
   = intLit: IntLiteral
   | boolLit: BooleanLiteral
   | strLit: StringLiteral
+  | charLit: CharLiteral
   ;
 
 lexical IntLiteral = Num+ !>> [0-9];
+lexical CharLiteral = "\'" ![\'\n] "\'";
 
 syntax BooleanLiteral
   = trueLit: "true"

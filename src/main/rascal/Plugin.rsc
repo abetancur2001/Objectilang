@@ -10,7 +10,7 @@ PathConfig pcfg = getProjectPathConfig(|project://Objectilang|);
 Language objLang = language(
     pcfg,
     "Objectilang",
-    {"objl"},
+    {"ol"},
     "Plugin",
     "contribs"
 );

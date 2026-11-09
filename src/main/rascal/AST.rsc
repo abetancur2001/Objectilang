@@ -34,8 +34,8 @@ data Mod
 data ConsOp
     = consOp(
         str firstName,
-        str firstType,
-        list[tuple[str, str]] rest
+        Type firstType,
+        list[tuple[str, Type]] rest
     );
 
 
@@ -85,7 +85,8 @@ data Type
 data BasicType
     = integer()
     | boolean()
-    | string();
+    | string()
+    | char();
 
 data TypeArguments
     = typeArgs(Type first, list[Type] rest);
@@ -122,7 +123,8 @@ data Expression
 data Literal
     = intLit(str intValue)
     | boolLit(BooleanLiteral booleanValue)
-    | strLit(str stringValue);
+    | strLit(str stringValue)
+    | charLit(str charValue);
 
 data BooleanLiteral
     = trueLit()
