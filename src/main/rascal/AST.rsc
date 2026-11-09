@@ -97,10 +97,27 @@ data Expression
     | variableExpr(str name)
     | newExpression(NewExpression newValue)
     | methodCallExpr(MethodCall callValue)
-    | conditionalExpr(IfExpression conditionalValue)
-    | binaryExpr(BinaryExpression binaryValue)
     | paren(Expression expr)
-    | fieldAccess(Expression obj, str field);
+    | fieldAccess(Expression obj, str field)
+    | neg(Expression arg)
+    | pow(Expression lhs, Expression rhs)
+    | mul(Expression lhs, Expression rhs)
+    | div(Expression lhs, Expression rhs)
+    | modulo(Expression lhs, Expression rhs)
+    | add(Expression lhs, Expression rhs)
+    | sub(Expression lhs, Expression rhs)
+    | lt(Expression lhs, Expression rhs)
+    | gt(Expression lhs, Expression rhs)
+    | le(Expression lhs, Expression rhs)
+    | ge(Expression lhs, Expression rhs)
+    | ne(Expression lhs, Expression rhs)
+    | eq(Expression lhs, Expression rhs)
+    | inOp(Expression lhs, Expression rhs)
+    | andOp(Expression lhs, Expression rhs)
+    | orOp(Expression lhs, Expression rhs)
+    | arrow(Expression lhs, Expression rhs)
+    | implies(Expression lhs, Expression rhs)
+    | conditionalExpr(Expression cond, Expression thenExpr, Expression elseExpr);
 
 data Literal
     = intLit(str intValue)
@@ -155,32 +172,6 @@ data IfExpression
         Expression thenExpr,
         Expression elseExpr
     );
-
-data BinaryExpression
-    = binary(Expression lhs, Operator op, Expression rhs);
-
-
-// Operadores
-data Operator
-    = mul()
-    | div()
-    | sub()
-    | add()
-    | pow()
-    | modulo()
-    | lt()
-    | gt()
-    | le()
-    | ge()
-    | ne()
-    | eq()
-    | andOp()
-    | orOp()
-    | negOp()
-    | arrow()
-    | inOp()
-    | implies();
-
 
 // Asignaciones e impresión
 data Assignment

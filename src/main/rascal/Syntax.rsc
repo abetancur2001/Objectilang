@@ -32,12 +32,6 @@ syntax Thing = thing: Variance variance ConsOp? consOp;
 
 syntax Variance = variance: "[" Mod Word ("," Mod Word)* "]";
 
-syntax Operator
-  = mul: "*" | div: "/" | sub: "-" | add: "+" | pow: "**" | modulo: "%"
-  | lt: "\<" | gt: "\>" | le: "\<=" | ge: "\>=" | ne: "\<\>" | eq: "="
-  | andOp: "and" | orOp: "or" | negOp: "neg" | arrow: "-\>" | inOp: "in" | implies: "=\>"
-  ;
-
 syntax Punctuation
   = dot: "." | lparen: "(" | rparen: ")" | lbracket: "[" | rbracket: "]" | colon: ":"
   ;
@@ -91,10 +85,31 @@ syntax Expression
   | variableExpr: Word name
   | newExpression: NewExpression
   | methodCallExpr: MethodCall
-  | conditionalExpr: IfExpression
-  | binaryExpr: BinaryExpression
   | paren: "(" Expression expr ")"
-  | fieldAccess: Expression obj "." Word field
+  > fieldAccess: Expression obj "." Word field
+  > neg: "neg" Expression arg
+  > right pow: Expression lhs "**" Expression rhs
+  > left ( mul: Expression lhs "*" Expression rhs
+         | div: Expression lhs "/" Expression rhs
+         | modulo: Expression lhs "%" Expression rhs
+         )
+  > left ( add: Expression lhs "+" Expression rhs
+         | sub: Expression lhs "-" Expression rhs
+         )
+  > non-assoc ( lt: Expression lhs "\<" Expression rhs
+              | gt: Expression lhs "\>" Expression rhs
+              | le: Expression lhs "\<=" Expression rhs
+              | ge: Expression lhs "\>=" Expression rhs
+              | ne: Expression lhs "\<\>" Expression rhs
+              | eq: Expression lhs "=" Expression rhs
+              )
+  > non-assoc inOp: Expression lhs "in" Expression rhs
+  > left andOp: Expression lhs "and" Expression rhs
+  > left orOp: Expression lhs "or" Expression rhs
+  > right ( arrow: Expression lhs "-\>" Expression rhs
+          | implies: Expression lhs "=\>" Expression rhs
+          )
+  > conditionalExpr: "if" Expression cond "then" Expression thenExpr "else" Expression elseExpr
   ;
 
 syntax Literal
@@ -135,8 +150,6 @@ syntax Parameter = parameter: Word name ":" Type typ;
 syntax MethodCall = methodCall: Word obj "." Word name "(" Arguments? args ")";
 
 syntax IfExpression = ifExpr: "if" Expression cond "then" Expression thenExpr "else" Expression elseExpr;
-
-syntax BinaryExpression = binary: Expression lhs Operator op Expression rhs;
 
 syntax Assignment = assignment: Word name "=" Expression val;
 
